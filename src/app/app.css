@@ -2,11 +2,11 @@
 :host {
   display: block;
   padding: 20px;
-  color: #111;
-  background: white;
-  font-family: "Times New Roman", serif;
   min-height: 100vh;
   box-sizing: border-box;
+  background: #fff;
+  color: #000;
+  font-family: "Times New Roman", serif;
 }
 
 h1 {
@@ -18,6 +18,12 @@ p {
   font-size: 22px;
 }
 
+.summary {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
 h2 {
   font-size: 34px;
   margin-top: 38px;
@@ -27,55 +33,109 @@ h2 {
 form {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 30px;
 }
 
 input {
-  font-size: 18px;
-  padding: 6px;
+  width: 250px;
+  max-width: 100%;
+  padding: 10px;
   box-sizing: border-box;
+  font-size: 18px;
+  border: 1px solid #92929c;
+  border-radius: 6px;
 }
 
-form input {
-  width: 250px;
+.search-input {
+  width: 350px;
+  margin-bottom: 20px;
 }
 
 button {
+  padding: 10px 16px;
   font-size: 18px;
-  padding: 6px 12px;
+  background: #e9e9ed;
+  color: #000;
+  border: 1px solid #92929c;
+  border-radius: 6px;
   cursor: pointer;
 }
 
+button:hover {
+  background: #d9d9e0;
+}
+
 table {
-  margin-top: 12px;
-  border-spacing: 8px;
+  width: 100%;
+  border-collapse: collapse;
   font-size: 22px;
   text-align: left;
 }
 
 th,
 td {
-  padding: 5px;
+  padding: 12px 10px;
+  vertical-align: middle;
 }
 
-@media (max-width: 600px) {
+th {
+  font-size: 25px;
+}
+
+.actions {
+  white-space: nowrap;
+}
+
+.delete-button {
+  margin-right: 8px;
+}
+
+.edit-button {
+  min-width: 105px;
+}
+
+@media (max-width: 700px) {
   h1 {
     font-size: 32px;
   }
 
-  form {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+  h2 {
+    font-size: 28px;
   }
 
-  form input {
-    max-width: 100%;
+  form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  form input,
+  .search-input {
+    width: 100%;
   }
 
   table {
+    font-size: 15px;
+  }
+
+  th,
+  td {
+    padding: 8px 4px;
+  }
+
+  th {
     font-size: 16px;
-    border-spacing: 3px;
+  }
+
+  .actions {
+    white-space: normal;
+  }
+
+  .actions button {
+    display: block;
+    margin: 4px 0;
+    font-size: 14px;
+    padding: 6px;
   }
 }

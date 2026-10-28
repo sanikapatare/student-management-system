@@ -20,14 +20,17 @@ export class App {
   studentMarks: number | null = null;
   searchText = '';
 
+  editingId: number | null = null;
+
   students: Student[] = [
     { id: 1, name: 'Rahul', marks: 78 },
     { id: 2, name: 'Priya', marks: 92 },
     { id: 3, name: 'Aman', marks: 67 },
-    { id: 4, name: 'Neha', marks: 82 }
+    { id: 4, name: 'Neha', marks: 82 },
+    { id: 5, name: 'Tanuja', marks: 15 }
   ];
 
-  nextId = 5;
+  nextId = 6;
 
   get totalStudents(): number {
     return this.students.length;
@@ -58,6 +61,17 @@ export class App {
     return marks >= 35 ? 'Pass' : 'Fail';
   }
 
+  getGrade(marks: number): string {
+    if (marks >= 90) return 'A+';
+    if (marks >= 85) return 'A';
+    if (marks >= 80) return 'A-';
+    if (marks >= 70) return 'B+';
+    if (marks >= 60) return 'B';
+    if (marks >= 50) return 'C';
+    if (marks >= 35) return 'D';
+    return 'F';
+  }
+
   addStudent(): void {
     const name = this.studentName.trim();
     const marks = this.studentMarks;
@@ -77,6 +91,17 @@ export class App {
       return;
     }
 
+    if (this.editingId !== null) {
+      this.students = this.students.map(student =>
+        student.id === this.editingId
+          ? { ...student, name, marks }
+          : student
+      );
+
+      this.cancelEdit();
+      return;
+    }
+
     this.students.push({
       id: this.nextId++,
       name,
@@ -87,9 +112,25 @@ export class App {
     this.studentMarks = null;
   }
 
+  editStudent(student: Student): void {
+    this.editingId = student.id;
+    this.studentName = student.name;
+    this.studentMarks = student.marks;
+  }
+
+  cancelEdit(): void {
+    this.editingId = null;
+    this.studentName = '';
+    this.studentMarks = null;
+  }
+
   deleteStudent(id: number): void {
     this.students = this.students.filter(
       student => student.id !== id
     );
+
+    if (this.editingId === id) {
+      this.cancelEdit();
+    }
   }
 }

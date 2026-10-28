@@ -3,11 +3,17 @@
 
 <p>Manage student records and academic performance.</p>
 
-<p>
-  <strong>Total Students:</strong> {{ totalStudents }}
-  <br />
-  <strong>Class Average:</strong> {{ classAverage }}
-</p>
+<div class="summary">
+  <p>
+    <strong>Total Students</strong>
+    {{ totalStudents }}
+  </p>
+
+  <p>
+    <strong>Class Average</strong>
+    {{ classAverage }}
+  </p>
+</div>
 
 <h2>Add a Student</h2>
 
@@ -31,12 +37,21 @@
     required
   />
 
-  <button type="submit">Add Student</button>
+  <button type="submit">
+    {{ editingId !== null ? 'Update Student' : 'Add Student' }}
+  </button>
+
+  @if (editingId !== null) {
+    <button type="button" (click)="cancelEdit()">
+      Cancel
+    </button>
+  }
 </form>
 
 <h2>Student Records</h2>
 
 <input
+  class="search-input"
   type="text"
   name="searchText"
   placeholder="Search by student name"
@@ -50,6 +65,7 @@
       <th>Name</th>
       <th>Marks</th>
       <th>Result</th>
+      <th>Grade</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -61,18 +77,28 @@
         <td>{{ student.name }}</td>
         <td>{{ student.marks }}</td>
         <td>{{ getResult(student.marks) }}</td>
-        <td>
+        <td>{{ getGrade(student.marks) }}</td>
+        <td class="actions">
           <button
             type="button"
+            class="delete-button"
             (click)="deleteStudent(student.id)"
           >
             Delete
+          </button>
+
+          <button
+            type="button"
+            class="edit-button"
+            (click)="editStudent(student)"
+          >
+            ✎ Edit
           </button>
         </td>
       </tr>
     } @empty {
       <tr>
-        <td colspan="5">No students found.</td>
+        <td colspan="6">No students found.</td>
       </tr>
     }
   </tbody>
